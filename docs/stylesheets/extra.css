@@ -1,0 +1,19 @@
+:root {
+  --md-primary-fg-color: #526548;
+  --md-accent-fg-color: #b95736;
+  --md-default-bg-color: #fcfaf5;
+  --md-text-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.md-header { box-shadow: none; }
+.md-tabs { background: #45563d; }
+.md-typeset h1, .md-typeset h2 { font-family: Georgia, serif; color: #34432e; }
+.md-typeset h1 { font-size: 2.5em; line-height: 1.15; }
+.md-typeset .hero { padding: 2rem 0 1rem; max-width: 42rem; }
+.md-typeset .eyebrow { text-transform: uppercase; letter-spacing: .15em; font-size: .65rem; color: #87664b; font-weight: 700; }
+.md-typeset .grid.cards > ul > li { border: 1px solid #e4dfd1; border-radius: .65rem; background: #fffefa; padding: 1.2rem; }
+.md-typeset .grid.cards > ul > li:hover { border-color: #88997b; box-shadow: 0 .2rem .7rem #34432e10; }
+.md-typeset .grid.cards h2 { margin-top: .3rem; }
+.md-typeset .md-button { border-radius: .35rem; }
+.md-typeset math { font-size: 1.4em; padding: 1em; }
+.md-footer { background: #34432e; }
+@media (max-width: 600px) { .md-typeset h1 { font-size: 2em; } }

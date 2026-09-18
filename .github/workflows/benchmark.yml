@@ -1,0 +1,29 @@
+name: Dependency benchmark
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.7'
+      # Два чистых окружения; кэш второй установки прогрет первой.
+      - run: |
+          python -m venv /tmp/bench-cold
+          python -m venv /tmp/bench-warm
+          python scripts/measure.py ci-install-cold /tmp/bench-cold/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-cold /tmp/bench-cold/bin/python -m mkdocs build --strict
+          python scripts/measure.py ci-install-warm /tmp/bench-warm/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-warm /tmp/bench-warm/bin/python -m mkdocs build --strict
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark
+          path: report/evidence/ci-*.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: timings
+          path: report/evidence/timings.csv

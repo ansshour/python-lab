@@ -1,0 +1,45 @@
+site_name: Домашние рецепты
+site_description: Простые рецепты на каждый день
+site_url: !ENV [SITE_URL, 'http://127.0.0.1:8000/']
+use_directory_urls: false
+
+validation:
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+
+theme:
+  name: material
+  language: ru
+  font: false
+
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+
+nav:
+  - Главная: index.md
+  - Рецепты: recipes.md
+  - Расчёт порций: portions.md
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - tables
+  - admonition
+  - toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: Рецепты — CC BY 4.0 · Код — MIT
