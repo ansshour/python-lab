@@ -1,0 +1,5 @@
+ssh-transfer	Upload without deleting	2026-09-18T14:19:58.7116582Z Number of deleted files: 0
+ssh-transfer	Upload without deleting	2026-09-18T14:19:58.7125003Z Upload completed in 2.251 seconds
+ssh-transfer	Upload with deleting	2026-09-18T14:19:59.2996946Z Number of deleted files: 1 (reg: 1)
+ssh-transfer	Upload with deleting	2026-09-18T14:19:59.3002858Z Upload completed in 0.508 seconds
+ssh-transfer	Verify platform masking with a harmless test secret	2026-09-18T14:19:59.3343729Z Mask probe: ***

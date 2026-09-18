@@ -1,0 +1,6 @@
+label,seconds,exit_code,environment
+local-strict,0.874,0,local
+ci-install-cold,10.375,0,true
+ci-build-cold,0.500,0,true
+ci-install-warm,7.096,0,true
+ci-build-warm,0.412,0,true

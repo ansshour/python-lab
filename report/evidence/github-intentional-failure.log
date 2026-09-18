@@ -1,0 +1,33 @@
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	﻿2026-09-18T14:15:42.2002964Z ##[group]Run python scripts/measure.py strict python -m mkdocs build --strict
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2003583Z [36;1mpython scripts/measure.py strict python -m mkdocs build --strict[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2042860Z shell: /usr/bin/bash -e {0}
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2043153Z env:
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2043432Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2043907Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2044347Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2044896Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2045314Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2045719Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:42.2046055Z ##[endgroup]
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1259627Z 
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1260733Z [31m │  ⚠  Warning from the Material for MkDocs team[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1261417Z [31m │[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1262106Z [31m │[0m  MkDocs 2.0, the underlying framework of Material for MkDocs,
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1263003Z [31m │[0m  will introduce backward-incompatible changes, including:
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1263657Z [31m │[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1264086Z [31m │  × [0mAll plugins will stop working – the plugin system has been removed
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1264937Z [31m │  × [0mAll theme overrides will break – the theming system has been rewritten
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1265553Z [31m │  × [0mNo migration path exists – existing projects cannot be upgraded
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1266139Z [31m │  × [0mClosed contribution model – community members can't report bugs
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1266661Z [31m │  × [0mCurrently unlicensed – unsuitable for production use
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1267016Z [31m │[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1267248Z [31m │[0m  Our full analysis:
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1267512Z [31m │[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1268001Z [31m │[0m  [4mhttps://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/[0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1268467Z [0m
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1268693Z INFO    -  Cleaning site directory
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1269136Z INFO    -  Building documentation to directory: /home/runner/work/python-lab/python-lab/site
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1269881Z WARNING -  Doc file 'index.md' contains a link 'missing-page.md', but the target is not found among documentation files.
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1270325Z 
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1270437Z Aborted with 1 warnings in strict mode!
+lint	Run python scripts/measure.py strict python -m mkdocs build --strict	2026-09-18T14:15:43.1335465Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,1076 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Отчёт — Домашние рецепты</title><style>
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f4f1e9;color:#253126;font:16px/1.65 system-ui,sans-serif}
+main{max-width:1100px;margin:40px auto;padding:64px;background:#fffefa;border-radius:16px}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.25;color:#3d5137}h1{font-size:42px}h2{margin-top:54px;padding-top:22px;border-top:1px solid #dedccd}h3{margin-top:32px}
+a{color:#456d40}table{border-collapse:collapse;width:100%;font-size:14px;margin:24px 0;display:block;overflow-x:auto}th,td{padding:12px;border:1px solid #dddccf;vertical-align:top;min-width:110px}th{background:#e9eee1;text-align:left}tr:nth-child(even){background:#fafaf5}
+pre{background:#f0f2eb;padding:20px;border-radius:8px;overflow:auto;font:12px/1.55 ui-monospace,monospace}code{overflow-wrap:anywhere}img{display:block;max-width:100%;max-height:650px;object-fit:contain;object-position:left top;margin:24px 0;border:1px solid #dedccd}
+@media(max-width:700px){main{margin:0;padding:24px;border-radius:0}h1{font-size:30px}}
+@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2,h3{break-after:avoid}pre{white-space:pre-wrap}table{font-size:10px}img{max-height:160mm}a{color:inherit}tr{break-inside:avoid}}
+</style><main><h1 id="_1">Публикация сайта «Домашние рецепты»</h1>
+<p><strong>Лабораторная работа · T3 + P1 + челлендж · 18 сентября 2026 года</strong></p>
+<h2 id="1">1. Результат и границы выполненной работы</h2>
+<p>Создан небольшой сайт с рецептами, поиском и формулой пересчёта порций.
+Он собирается автоматически и опубликован на GitHub Pages. Для GitVerse
+подготовлен отдельный пайплайн доставки на Helios. Отдельный action опубликован
+как репозиторий и версионный релиз и проверен на настоящем временном SSH-сервере.</p>
+<p><strong>Работа пока не полностью закрывает задание:</strong> нет доступа к GitVerse и Helios,
+поэтому запуск на отечественной платформе, её замеры и публикация на Helios
+не выполнены. Листинг Marketplace также не опубликован. Ниже эти пункты
+отделены от реально полученных результатов.</p>
+<table>
+<thead>
+<tr>
+<th>Результат</th>
+<th>Ссылка или статус</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Репозиторий сайта</td>
+<td><a href="https://github.com/ansshour/python-lab">ansshour/python-lab</a></td>
+</tr>
+<tr>
+<td>Опубликованный сайт</td>
+<td><a href="https://ansshour.github.io/python-lab/">GitHub Pages</a></td>
+</tr>
+<tr>
+<td>Репозиторий action</td>
+<td><a href="https://github.com/ansshour/helios-deploy-action">ansshour/helios-deploy-action</a></td>
+</tr>
+<tr>
+<td>Версионный выпуск</td>
+<td><a href="https://github.com/ansshour/helios-deploy-action/releases/tag/v1.0.0">v1.0.0</a>, также создан тег <code>v1</code></td>
+</tr>
+<tr>
+<td>Успешная публикация</td>
+<td><a href="https://github.com/ansshour/python-lab/actions/runs/35355006335">Запуск Site CI</a></td>
+</tr>
+<tr>
+<td>Публикация после обновления Actions</td>
+<td><a href="https://github.com/ansshour/python-lab/actions/runs/35355538343">Повторная проверка</a></td>
+</tr>
+<tr>
+<td>Намеренно проваленный запуск</td>
+<td><a href="https://github.com/ansshour/python-lab/actions/runs/35355042681">Битая ссылка</a></td>
+</tr>
+<tr>
+<td>Измерение кэша</td>
+<td><a href="https://github.com/ansshour/python-lab/actions/runs/35355038881">Dependency benchmark</a></td>
+</tr>
+<tr>
+<td>Реальное использование action</td>
+<td><a href="https://github.com/ansshour/python-lab/actions/runs/35355538269">Интеграционный запуск</a></td>
+</tr>
+<tr>
+<td>Репозиторий GitVerse и сайт Helios</td>
+<td>Не созданы: ожидают данных аккаунтов</td>
+</tr>
+<tr>
+<td>GitHub Marketplace</td>
+<td>Требуется завершить оформление через авторизованный браузер</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Главная страница" src="evidence/site-home.png" /></p>
+<h2 id="2">2. Выбор генератора</h2>
+<p>Исходный проект уже использовал MkDocs Material. Тема рецептов сохранена по
+согласованию. Полное условие T1 не было предоставлено, поэтому ниже — краткое
+обоснование выбора, а не заявление о выполнении неизвестных требований T1.</p>
+<table>
+<thead>
+<tr>
+<th>Генератор</th>
+<th>Что удобно</th>
+<th>Что потребуется для этой работы</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MkDocs + Material</td>
+<td>Markdown, один файл настроек, готовые навигация и поиск</td>
+<td>Небольшой CSS и страницы с рецептами</td>
+</tr>
+<tr>
+<td>Sphinx</td>
+<td>Ссылки между разделами, документация API, вывод в HTML и LaTeX</td>
+<td>Дополнительная настройка для небольшого бытового сайта</td>
+</tr>
+<tr>
+<td>Hugo</td>
+<td>Отдельный исполняемый файл, темы, разные форматы вывода</td>
+<td>Выбор темы и отдельная настройка поиска</td>
+</tr>
+</tbody>
+</table>
+<p>Для текущего небольшого сайта выбран <strong>MkDocs 1.6.1 + Material 9.7.7</strong>.
+Это оценка удобства, а не сравнительный тест скорости генераторов.
+Источники: <a href="https://www.mkdocs.org/">MkDocs</a>,
+<a href="https://www.sphinx-doc.org/en/master/">Sphinx</a>,
+<a href="https://gohugo.io/about/features/">Hugo</a>.</p>
+<h2 id="3">3. Ход работы</h2>
+<h3 id="_2">Окружение и зависимости</h3>
+<p>В системе команда <code>python3</code> запускала Python 3.11.7. При этом Python 3.14.7
+уже был установлен через Homebrew. Для проекта выбран именно он, версия
+записана в <code>.python-version</code>. Повторная установка системного Python не нужна.
+На дату проверки это актуальная версия по <a href="https://www.python.org/downloads/macos/">странице Python</a>.</p>
+<p><code>pip</code> проверен. Отсутствующий <code>virtualenv</code> установлен в изолированное окружение
+через <code>uv tool run</code>; проверена версия 21.7.14 и создано временное окружение
+на Python 3.14.7 с pip 26.2.1. Рабочее <code>.venv</code> затем синхронизировано через <code>uv</code>.
+Каркас сайта уже существовал: сохранены рецепты, добавлены оформление и расчёт порций.</p>
+<p>Команды для повторения из чистого каталога проекта:</p>
+<pre><code class="language-sh">uv tool run --from virtualenv==21.7.14 virtualenv --python python3.14 .venv
+source .venv/bin/activate
+python --version
+python -m pip --version
+python -m pip install --require-hashes -r requirements.txt
+python -m mkdocs serve --dev-addr 127.0.0.1:8017
+python -m mkdocs build --strict
+</code></pre>
+<p>Рекомендации по установке: <a href="https://virtualenv.pypa.io/en/latest/installation.html">virtualenv</a>.
+Зависимости зафиксированы в <code>uv.lock</code>, а <code>requirements.txt</code> содержит точные
+версии и хеши пакетов. В <code>.gitignore</code> включены окружение, <code>site/</code>, <code>_build/</code>,
+кэш и служебные файлы. Образ ОС раннера обновляется платформой, поэтому
+фиксация Python и пакетов не означает побайтовую фиксацию всей ОС.</p>
+<h3 id="_3">Сборка и адреса страниц</h3>
+<p><code>SITE_URL</code> передаётся в <code>site_url</code>. Для GitHub используется
+<code>https://ansshour.github.io/python-lab/</code>, для Helios понадобится его реальный
+полный адрес с подкаталогом. Опция <code>base_url</code> в MkDocs не задаётся: это название
+настройки других генераторов. <code>use_directory_urls: false</code> создаёт явные ссылки
+на <code>recipes.html</code> и <code>portions.html</code>, не требующие правил перенаправления сервера.</p>
+<p>Для проверки подкаталога выполнена отдельная сборка с адресом
+<code>http://127.0.0.1:8018/recipes/</code>. Проверены файлы, ссылки, якоря и HTTP-ответы.
+Страница <code>404.html</code> использует абсолютные пути; проверка учитывает именно
+настроенный префикс сайта, а не запрещает все абсолютные ссылки подряд.</p>
+<p><code>mkdocs build --strict</code> дополнен <code>validation.links.anchors: warn</code> и
+<code>not_found: warn</code>. Это существенно: в исходной конфигурации отсутствующие
+якоря давали <code>INFO</code>, и строгая сборка оставалась успешной.</p>
+<h3 id="github-pages">Публикация на GitHub Pages</h3>
+<p>Создан публичный репозиторий, файлы закоммичены и отправлены в <code>main</code>.
+В Pages установлен источник <strong>GitHub Actions</strong>. Бейдж в README ссылается
+на реальный workflow, а не на статическую картинку.</p>
+<table>
+<thead>
+<tr>
+<th>Подход</th>
+<th>Что публикуется</th>
+<th>Настройка Pages</th>
+<th>Особенности</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>peaceiris/actions-gh-pages</code></td>
+<td>Готовые файлы коммитятся в ветку <code>gh-pages</code></td>
+<td>Deploy from a branch</td>
+<td>Нужна запись в репозиторий; история исходников и сайта раздельна</td>
+</tr>
+<tr>
+<td><code>upload-pages-artifact</code> + <code>deploy-pages</code></td>
+<td>Архив сборки передаётся сервису Pages</td>
+<td>GitHub Actions</td>
+<td>Не нужна ветка с HTML; права <code>pages: write</code>, <code>id-token: write</code> только у deploy</td>
+</tr>
+</tbody>
+</table>
+<p>Использован второй вариант. Официальный процесс описан в
+<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages">документации GitHub</a>.</p>
+<h2 id="4-t3-cicd-">4. T3: отечественные CI/CD-платформы</h2>
+<p>Сведения проверены по официальным документам на дату отчёта. Доступность
+документации проверена из текущей сети; надёжность сервисов за длительный
+период не измерялась. «Не подтверждено» не означает «возможности нет».</p>
+<h3 id="_4">Раннеры, формат и готовые компоненты</h3>
+<table>
+<thead>
+<tr>
+<th>Критерий</th>
+<th>GitVerse</th>
+<th>SourceCraft</th>
+<th>GitFlic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Где выполняются задачи</td>
+<td>Облачные, локальные и организационные раннеры</td>
+<td>Облачные, serverless и пользовательские (self-hosted) воркеры</td>
+<td>Агенты сервиса и собственных установок; регистрация агента проекта ограничена редакциями Enterprise, Onpremise, Atlas</td>
+</tr>
+<tr>
+<td>Файл</td>
+<td><code>.gitverse/workflows/*.yml</code></td>
+<td><code>.sourcecraft/ci.yaml</code></td>
+<td><code>gitflic-ci.yaml</code></td>
+</tr>
+<tr>
+<td>Устройство</td>
+<td><code>jobs</code>, <code>steps</code>, <code>needs</code>, <code>uses</code></td>
+<td>Рабочие процессы, задания, кубики</td>
+<td><code>stages</code>, задания, <code>script</code>, <code>rules</code>, <code>needs</code></td>
+</tr>
+<tr>
+<td>Близость к GitHub Actions</td>
+<td>Высокая на уровне описания; совместимость конкретных действий нужно проверять</td>
+<td>Есть запуск Actions через кубики; весь workflow не становится автоматически совместимым</td>
+<td>YAML похож на GitLab CI; GitHub workflow нужно переписать</td>
+</tr>
+<tr>
+<td>Готовые действия</td>
+<td>Actions и примеры starter-workflows</td>
+<td>Переиспользуемые кубики и GitHub Actions</td>
+<td>Шаблоны и переиспользуемые CI-компоненты</td>
+</tr>
+<tr>
+<td>Важное ограничение</td>
+<td>GitHub-специфичные сервисы не переносятся одним копированием YAML</td>
+<td>Actions и GitLab-пайплайны запускаются только на облачных воркерах</td>
+<td>Не следует считать любой GitLab YAML совместимым без проверки справочника</td>
+</tr>
+</tbody>
+</table>
+<p>Основание: <a href="https://gitverse.ru/docs/cicd/docs/workflow">GitVerse: синтаксис</a>,
+<a href="https://gitverse.ru/docs/cicd/docs/runners/">раннеры</a>,
+<a href="https://sourcecraft.dev/portal/docs/ru/sourcecraft/concepts/ci-cd">SourceCraft: CI/CD</a>,
+<a href="https://sourcecraft.dev/portal/docs/ru/sourcecraft/ci-cd-ref/cubes">кубики</a>,
+<a href="https://sourcecraft.dev/portal/docs/ru/sourcecraft/concepts/workers">воркеры SourceCraft</a>,
+<a href="https://docs.gitflic.ru/latest/cicd/agent/">GitFlic: агенты</a>,
+<a href="https://docs.gitflic.ru/latest/cicd/gitflic-ci-yaml/">YAML</a>,
+<a href="https://docs.gitflic.ru/latest/cicd/components/">компоненты</a>.</p>
+<h3 id="_5">Секреты, файлы и бесплатный тариф</h3>
+<table>
+<thead>
+<tr>
+<th>Критерий</th>
+<th>GitVerse</th>
+<th>SourceCraft</th>
+<th>GitFlic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Секреты</td>
+<td>Хранилище платформы, обращения через <code>secrets</code></td>
+<td>Секреты и переменные окружения</td>
+<td>Переменные задач, интеграции с хранилищами секретов; возможности зависят от редакции</td>
+</tr>
+<tr>
+<td>Артефакты</td>
+<td>Upload/download actions, передача между jobs</td>
+<td>Артефакты кубиков и передача данных между заданиями</td>
+<td><code>artifacts</code>, зависимости заданий</td>
+</tr>
+<tr>
+<td>Кэш</td>
+<td><code>actions/cache</code>, ключ по файлу зависимостей</td>
+<td>Механизм нужно выбирать для конкретного режима кубика; перенос <code>actions/cache</code> требует испытания</td>
+<td><code>cache.paths</code>, <code>cache.key</code></td>
+</tr>
+<tr>
+<td>Бесплатное время CI</td>
+<td>1000 мин/месяц для публичных, 500 для приватных репозиториев</td>
+<td>Free: 1000 мин/месяц для публичных и приватных репозиториев, до 5 параллельных процессов</td>
+<td>Единую актуальную квоту бесплатных облачных минут подтвердить не удалось; уточнить в аккаунте</td>
+</tr>
+<tr>
+<td>Лимиты файлов</td>
+<td>Артефакты: 500 МБ, обычно 30 дней</td>
+<td>До 100 МБ артефактов кубика, 10 ГБ на организацию; хранение 14 дней</td>
+<td>Определяются редакцией и настройками сервиса</td>
+</tr>
+<tr>
+<td>Документация: оценка автора</td>
+<td>Удобные короткие примеры; версии Actions всё равно надо проверять</td>
+<td>Подробные справочники, но больше новых понятий</td>
+<td>Подробный YAML-справочник; важно отличать облако от собственной установки</td>
+</tr>
+</tbody>
+</table>
+<p>Источники: <a href="https://gitverse.ru/docs/cicd/docs/limits/">лимиты GitVerse</a>,
+<a href="https://gitverse.ru/docs/cicd/manuals/caching/">кэш GitVerse</a>,
+<a href="https://gitverse.ru/docs/cicd/manuals/artifacts/">артефакты GitVerse</a>,
+<a href="https://sourcecraft.dev/portal/docs/ru/sourcecraft/pricing">тарифы SourceCraft</a>,
+<a href="https://sourcecraft.dev/portal/docs/ru/sourcecraft/concepts/limits">лимиты SourceCraft</a>,
+<a href="https://docs.gitflic.ru/latest/cicd/cicd-settings/">настройки GitFlic</a>,
+<a href="https://docs.gitflic.ru/latest/company/billing_for_company/">тарификация GitFlic</a>.
+Бесплатная команда GitFlic до пяти человек не доказывает наличие бесплатного
+облачного раннера. Квоты нельзя смешивать с ценой лицензии.</p>
+<p>Собственный домен и HTTPS сайта определяются хостингом. Наличие CI само по
+себе их не предоставляет. <code>git push</code> запускает сборку исходников; готовый
+сайт можно затем отправить через SSH или S3 API из любого подходящего раннера.</p>
+<h3 id="_6">Три варианта размещения</h3>
+<table>
+<thead>
+<tr>
+<th>Критерий</th>
+<th>Helios ИТМО</th>
+<th>Yandex Object Storage</th>
+<th>Selectel S3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Модель</td>
+<td>Учебный сервер и каталог пользователя</td>
+<td>Бакет с режимом статического сайта</td>
+<td>Публичный бакет с режимом сайта</td>
+</tr>
+<tr>
+<td>Доставка</td>
+<td>SSH, при наличии rsync — синхронизация; SFTP/SCP зависят от сервера</td>
+<td>S3 API, например <code>aws s3 sync</code></td>
+<td>S3 API; основной вариант — AWS CLI</td>
+</tr>
+<tr>
+<td>Свой домен</td>
+<td>Требует согласования с администратором; не подтверждён для аккаунта</td>
+<td>Поддерживается настройкой DNS и бакета</td>
+<td>Поддерживается пользовательский домен</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>Зависит от предоставленного публичного адреса; ещё не проверен</td>
+<td>Есть HTTPS, для своего домена нужна настройка сертификата</td>
+<td>Для пользовательского домена добавляется TLS-сертификат</td>
+</tr>
+<tr>
+<td>Бесплатный вариант</td>
+<td>Учебная учётная запись; размер и срок доступа нужно уточнить</td>
+<td>Тарифицируются ресурсы; стартовые льготы не следует считать бессрочным бесплатным хостингом</td>
+<td>Тарифицируется хранение и другие ресурсы; бесплатная квота здесь не подтверждена</td>
+</tr>
+<tr>
+<td>Обслуживание</td>
+<td>Правила, квоты и доступ задаёт вуз</td>
+<td>Веб-сервер обслуживает провайдер</td>
+<td>Веб-сервер обслуживает провайдер</td>
+</tr>
+<tr>
+<td>Документация и доступность</td>
+<td>Найдены учебные материалы, но актуальные параметры аккаунта неизвестны</td>
+<td>Подробные инструкции по сайту, доступу и тарифам доступны</td>
+<td>Подробные инструкции по бакету, домену и TLS доступны</td>
+</tr>
+<tr>
+<td>Ограничение для проекта</td>
+<td>Без аккаунта нельзя проверить доставку и публичный URL</td>
+<td>Требуются облачный аккаунт, бакет и платёжные условия</td>
+<td>Требуются аккаунт, бакет и платёжные условия</td>
+</tr>
+</tbody>
+</table>
+<p>Для Helios <a href="https://se.ifmo.ru/~dima/ovt/OVT_Inf_mod.pdf">учебная памятка ИТМО</a>
+описывает SSH; документ старый, поэтому его порт не зашит как обязательный.
+Путь <code>public_html/recipes</code> в примере action — пример, а не проверенный
+путь конкретного пользователя. Не следует угадывать URL по SSH-имени.</p>
+<p>Сведения о хостингах: <a href="https://yandex.cloud/ru/docs/storage/concepts/hosting">Yandex: статический сайт</a>,
+<a href="https://yandex.cloud/ru/docs/storage/pricing">тарифы</a>,
+<a href="https://docs.selectel.ru/s3/buckets/website/">Selectel: сайт</a>,
+<a href="https://docs.selectel.ru/s3/manage/manage-user-domains/">домены</a>,
+<a href="https://docs.selectel.ru/s3/manage/tls-ssl-certificates/">TLS</a>,
+<a href="https://docs.selectel.ru/s3/tools/aws-cli/">AWS CLI</a>.
+WebDAV и FTP в этом проекте не используются; их наличие у каждой площадки
+не предполагается автоматически. Собственные CI-раннеры, кэш и секреты
+к режиму статического хостинга бакета не относятся.</p>
+<h3 id="workflow">Сколько стоит перенос workflow</h3>
+<p>Для P1 выбран <strong>GitVerse</strong>: структура ближе к уже работающему GitHub workflow.
+Следующая таблица — плановая оценка труда для небольшого сайта при готовых
+аккаунтах, а не замер выполненной миграции.</p>
+<table>
+<thead>
+<tr>
+<th>Работа</th>
+<th>Что переносится</th>
+<th>Что меняется</th>
+<th>Оценка</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub → GitVerse</td>
+<td>Markdown, Python-скрипты, зависимости, команды сборки, схема <code>needs</code></td>
+<td>Каталог workflow, <code>github</code> → <code>gitverse</code>, версии/адреса actions, секреты, доставка на Helios</td>
+<td>2–4 часа</td>
+</tr>
+<tr>
+<td>GitHub → SourceCraft</td>
+<td>Исходники, shell/Python-команды, зависимости</td>
+<td>Описание через tasks/cubes, события, условия, передача файлов и режим запуска Actions</td>
+<td>4–8 часов</td>
+</tr>
+<tr>
+<td>GitHub → GitFlic</td>
+<td>Исходники и команды</td>
+<td><code>gitflic-ci.yaml</code>, stages/rules, переменные, кэш, артефакты, настройка агента</td>
+<td>4–8 часов</td>
+</tr>
+<tr>
+<td>Проверка Helios</td>
+<td>Статические HTML/CSS/JS</td>
+<td>SSH-параметры, ключ сервера, права файлов, полный URL</td>
+<td>1–3 часа после выдачи доступа</td>
+</tr>
+</tbody>
+</table>
+<p><code>actions/deploy-pages</code> и GitHub Pages OIDC нельзя превратить в публикацию
+на Helios заменой имени платформы: это другой сервис и другой протокол.
+Вместо них используется SSH-action. GitHub environments и разрешения
+<code>pages: write</code> в отечественный workflow не переносились.</p>
+<p><strong>Практическая тонкость:</strong> GitVerse может обрабатывать также <code>.github/workflows</code>.
+При импорте проекта нужно отключить GitHub workflows в копии GitVerse и оставить
+<code>.gitverse/workflows/site.yml</code>, иначе возможны лишние запуски. Сам GitHub
+репозиторий менять ради этого не требуется.</p>
+<h2 id="5-p1">5. P1: устройство пайплайна</h2>
+<p>Подготовлен <code>.gitverse/workflows/site.yml</code>. Состояние: <strong>реализация готова к
+подключению аккаунта, выполнение на GitVerse не проверено</strong>. GitHub-аналог
+реально запущен и использован для проверки общей логики.</p>
+<pre><code class="language-text">push / pull_request / ручной запуск
+                 │
+                 ▼
+ lint: орфография → mkdocs --strict → ссылки и HTML
+                 │ needs: lint
+                 ▼
+ build: чистое окружение → зависимости → HTML → артефакт
+                 │ needs: build
+                 ▼
+ deploy: только main, не pull_request
+         GitHub Pages / SSH → Helios
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Событие</th>
+<th>lint</th>
+<th>build</th>
+<th>deploy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Push в <code>main</code></td>
+<td>Да</td>
+<td>После успешного lint</td>
+<td>После успешной сборки</td>
+</tr>
+<tr>
+<td>Push в другую ветку</td>
+<td>Да</td>
+<td>Да</td>
+<td>Пропущен</td>
+</tr>
+<tr>
+<td>Pull request</td>
+<td>Да</td>
+<td>Да</td>
+<td>Пропущен</td>
+</tr>
+<tr>
+<td>Ручной запуск в <code>main</code></td>
+<td>Да</td>
+<td>Да</td>
+<td>Да, если проверки прошли</td>
+</tr>
+<tr>
+<td>Ручной запуск в другой ветке</td>
+<td>Да</td>
+<td>Да</td>
+<td>Пропущен</td>
+</tr>
+<tr>
+<td>Учебная битая ссылка в GitHub (<code>break_links=true</code>)</td>
+<td>Завершается ошибкой</td>
+<td>Пропущен</td>
+<td>Пропущен</td>
+</tr>
+<tr>
+<td>Push тега</td>
+<td>Не запускается основным workflow</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Дополнительная ветка <code>codex/verify-build-only</code> проверена настоящим push:
+<a href="https://github.com/ansshour/python-lab/actions/runs/35355763602">запуск</a>
+завершил lint/build успешно, deploy получил <code>skipped</code>.
+Временные копии сайта также проверены с опечаткой и отсутствующим якорем:
+обе ошибки обнаружены, исходные страницы не изменены.</p>
+<p>В GitHub используются отдельные jobs и передача артефакта Pages. В GitVerse
+build загружает <code>website</code>, deploy скачивает именно этот артефакт и отправляет
+его на сервер. Повторная сборка в deploy не выполняется.</p>
+<p>Кэшируется каталог пакетов, а не <code>.venv</code>. Ключ включает ОС, Python и хеш
+<code>requirements.txt</code>. При изменении зависимостей создаётся другой кэш.
+GitHub использует кэш <code>setup-python</code>, GitVerse — <code>actions/cache@v3</code>, как
+в официальном примере платформы. Эти версии не объявляются универсально
+совместимыми: проверка на GitVerse ещё предстоит.</p>
+<p>Секреты Helios будут переданы только в deploy через Secrets платформы.
+В GitHub создан <strong>безвредный случайный тестовый секрет</strong> <code>LAB_MASK_PROBE</code>;
+в логе получено <code>Mask probe: ***</code>. Это доказывает маскирование на GitHub,
+но не на GitVerse. Приватный ключ Helios ещё не предоставлялся.</p>
+<h3 id="_7">Успешный и проваленный запуск</h3>
+<p><img alt="Успешный запуск" src="evidence/ci-success.png" /></p>
+<p><img alt="Намеренный провал" src="evidence/ci-failure.png" /></p>
+<p>В проваленном запуске в рабочую копию раннера добавлена ссылка на
+<code>missing-page.md</code>. Исходный файл в репозитории не испорчен.
+<a href="evidence/github-intentional-failure.log">Полный сохранённый лог</a> показывает
+предупреждение о несуществующем документе, затем остановку строгой сборки.
+<code>build</code> и <code>deploy</code> не выполнялись. После обычного запуска публикация снова успешна.</p>
+<h3 id="p1-gitverse">Что нужно для завершения P1 на GitVerse</h3>
+<ol>
+<li>Создать репозиторий GitVerse и загрузить проект, отключив в этой копии GitHub workflows.</li>
+<li>Включить облачный раннер. Проверить доступ к Python 3.14.7, PyPI и используемым actions.</li>
+<li>Записать переменные <code>HELIOS_HOST</code>, <code>HELIOS_USER</code>, <code>HELIOS_PORT</code>,
+   <code>HELIOS_PATH</code>, <code>HELIOS_SITE_URL</code>. Записать секреты <code>HELIOS_SSH_KEY</code> и
+   <code>HELIOS_KNOWN_HOSTS</code>. Отпечаток сервера сверить с администратором.</li>
+<li>На Helios проверить rsync, каталог, права и соответствие каталога публичному URL.</li>
+<li>Запустить main и отдельную ветку, затем намеренно испортить ссылку в учебной ветке.</li>
+<li>Создать безвредный тестовый секрет <code>LAB_MASK_PROBE</code> и запустить
+   <code>.gitverse/workflows/benchmark.yml</code>: повторить измерение кэша и маскирования именно
+   на GitVerse. Добавить его бейдж, ссылки, логи и скриншоты в отчёт.</li>
+</ol>
+<h2 id="6">6. Измерения и проверка результата</h2>
+<p>Замер выполнен <code>time.perf_counter</code> вокруг отдельных команд. На одном чистом
+GitHub runner созданы два разных пустых окружения; первая установка заполняет
+новый каталог pip-кэша, вторая использует его. Так сравнивается установка с
+холодным и тёплым <strong>кэшем пакетов</strong>. Время скачивания архива кэша платформы
+в этот эксперимент не включено. Это один опыт, не статистическая оценка.</p>
+<table>
+<thead>
+<tr>
+<th>Операция, Ubuntu 24.04 / Python 3.14.7</th>
+<th style="text-align: right;">Без кэша, с</th>
+<th style="text-align: right;">С кэшем, с</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Установка зафиксированных зависимостей</td>
+<td style="text-align: right;">10,375</td>
+<td style="text-align: right;">7,096</td>
+</tr>
+<tr>
+<td>Строгая сборка после установки</td>
+<td style="text-align: right;">0,500</td>
+<td style="text-align: right;">0,412</td>
+</tr>
+<tr>
+<td>Установка + сборка</td>
+<td style="text-align: right;">10,875</td>
+<td style="text-align: right;">7,508</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Другой замер</th>
+<th style="text-align: right;">Значение</th>
+<th>Как измерено</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Локальная строгая сборка</td>
+<td style="text-align: right;">0,874 с</td>
+<td>Полное время команды, macOS ARM64</td>
+</tr>
+<tr>
+<td>Job lint первого успешного CI</td>
+<td style="text-align: right;">15 с</td>
+<td>startedAt / completedAt GitHub API</td>
+</tr>
+<tr>
+<td>Job build первого успешного CI</td>
+<td style="text-align: right;">17 с</td>
+<td>Включает подготовку и отправку артефакта</td>
+</tr>
+<tr>
+<td>Job deploy первого успешного CI</td>
+<td style="text-align: right;">12 с</td>
+<td>Включает подготовку и вызов Pages</td>
+</tr>
+<tr>
+<td>Первый SSH upload в повторном тесте</td>
+<td style="text-align: right;">2,251 с</td>
+<td>Время внутри action, временный сервер</td>
+</tr>
+<tr>
+<td>SSH upload с <code>--delete</code></td>
+<td style="text-align: right;">0,508 с</td>
+<td>Тот же временный сервер</td>
+</tr>
+<tr>
+<td>Развёртывание на Helios</td>
+<td style="text-align: right;">Не измерено</td>
+<td>Нет доступа</td>
+</tr>
+<tr>
+<td>Холодный/тёплый запуск GitVerse</td>
+<td style="text-align: right;">Не измерено</td>
+<td>Нет аккаунта</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Ресурс опубликованного сайта</th>
+<th style="text-align: right;">Размер без HTTP-сжатия, байт</th>
+<th style="text-align: right;">HTTP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td style="text-align: right;">17 945</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr>
+<td><code>recipes.html</code></td>
+<td style="text-align: right;">22 568</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr>
+<td><code>portions.html</code></td>
+<td style="text-align: right;">15 230</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr>
+<td><code>search/search_index.json</code></td>
+<td style="text-align: right;">19 341</td>
+<td style="text-align: right;">200</td>
+</tr>
+</tbody>
+</table>
+<p>Это размеры самих ответов HTML/JSON, а не суммарный вес страницы со всеми CSS
+и JavaScript. Исходные значения: <a href="evidence/github-benchmark.csv">время</a>,
+<a href="evidence/page-sizes.csv">размеры</a>, <a href="evidence/github-success.json">jobs</a>,
+<a href="evidence/action-integration-extract.log">SSH и маскирование</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Проверка</th>
+<th>Полученный результат</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Строгая сборка</td>
+<td>Успех локально и на чистом GitHub runner</td>
+</tr>
+<tr>
+<td>Русская орфография</td>
+<td>Успех; проверяются словоформы, не стиль и грамматика</td>
+</tr>
+<tr>
+<td>Внутренние ссылки и якоря</td>
+<td>Файлы и якоря существуют</td>
+</tr>
+<tr>
+<td>Контрольная строка</td>
+<td>«Домашние рецепты» найдена в опубликованном HTML</td>
+</tr>
+<tr>
+<td>Поиск в браузере</td>
+<td>Запрос «сырники» выдаёт результаты с правильными ссылками</td>
+</tr>
+<tr>
+<td>Подкаталог <code>/recipes/</code></td>
+<td>Сборка, ссылки и HTTP-проверки проходят</td>
+</tr>
+<tr>
+<td>Формула без CDN</td>
+<td>MathML отображается при CSP, запрещающей внешние ресурсы</td>
+</tr>
+<tr>
+<td>Маскирование GitHub</td>
+<td>Безвредный секрет заменён на <code>***</code></td>
+</tr>
+<tr>
+<td>Доставка action</td>
+<td>Файл совпадает с источником; лишний файл сохраняется без delete и удаляется с delete</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Поиск" src="evidence/search.png" /></p>
+<p><img alt="Формула при запрете внешних ресурсов" src="evidence/math-no-cdn.png" /></p>
+<p>Для проверки CDN использован <code>scripts/preview_offline.py</code>: сервер добавляет
+<code>Content-Security-Policy</code> с разрешением ресурсов только своего origin.
+Формула есть непосредственно в HTML; в CSS нет внешних шрифтов. Это проверка
+недоступности сторонних ресурсов, а не обещание работы всего сайта без интернета
+и предварительной загрузки. Для старых браузеров оставлена текстовая формула.</p>
+<h2 id="7">7. Отладка: реальные ошибки</h2>
+<table>
+<thead>
+<tr>
+<th>Ошибка / сообщение</th>
+<th>Гипотеза</th>
+<th>Проверка</th>
+<th>Решение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>No module named virtualenv</code></td>
+<td>Модуль отсутствует у выбранного Python</td>
+<td>Запуск <code>python3 -m virtualenv --version</code></td>
+<td>Изолированная установка и запуск virtualenv 21.7.14 через uv</td>
+</tr>
+<tr>
+<td><code>does not contain an anchor '#сырники'</code></td>
+<td>Обычный slugifier удаляет кириллицу</td>
+<td>В исходном HTML заголовки получили <code>_1</code>, <code>_2</code> и подобные ID</td>
+<td>Unicode slugifier из pymdownx; отсутствующие якоря повышены до warn</td>
+</tr>
+<tr>
+<td><code>OSError: [Errno 48] Address already in use</code></td>
+<td>Порт 8000 занят</td>
+<td>Повторный запуск с другим портом</td>
+<td>Предпросмотр на 8017; чужой процесс не остановлен</td>
+</tr>
+<tr>
+<td><code>неизвестное слово: рецепты</code> и много похожих сообщений</td>
+<td>Первый словарь не покрывает русские словоформы</td>
+<td>Проверка обычных слов из исходных рецептов</td>
+<td>Переход с pyspellchecker на pymorphy3; словарь исключений не раздувался</td>
+</tr>
+<tr>
+<td>Несуществующий <code>missing-page.md</code>, <code>exit code 1</code></td>
+<td>Strict должен блокировать публикацию</td>
+<td>Намеренный ручной CI-запуск</td>
+<td>lint падает, build/deploy пропущены; нормальный запуск проходит</td>
+</tr>
+<tr>
+<td><code>Node.js 20 is deprecated</code></td>
+<td>Старые версии официальных actions</td>
+<td>Просмотр annotations успешного запуска</td>
+<td>Обновлены GitHub actions до актуальных выпусков; повторный CI успешен</td>
+</tr>
+<tr>
+<td><code>CERTIFICATE_VERIFY_FAILED</code> в системном Python 3.11</td>
+<td>У старого Python другая настройка доверенных сертификатов</td>
+<td>Тот же запрос через окружение Python 3.14.7</td>
+<td>Использовано проектное окружение; проверка TLS не отключалась</td>
+</tr>
+<tr>
+<td>Одноразовый SSH-ключ теста виден в параметрах шага</td>
+<td>Сгенерированное env-значение не становится секретом платформы автоматически</td>
+<td>Просмотр первого интеграционного лога</td>
+<td>Добавлен <code>add-mask</code> до использования ключа; повторный запуск успешен. Это ключ уничтоженного тестового сервера, не Helios</td>
+</tr>
+</tbody>
+</table>
+<p>Сведения о секрете Helios не выдумывались и не подставлялись в тест. В репозитории
+нет приватных ключей; в сохранённом фрагменте лога только итоговые показатели.
+Первые ошибки окружения наблюдались в ходе работы; для них не создавались
+искусственные скриншоты. Для намеренного CI-провала сохранён настоящий лог.</p>
+<h2 id="8-action-helios">8. Челлендж: action для Helios</h2>
+<p>В отдельном репозитории находится composite action с <code>action.yml</code>, inputs,
+outputs, описанием и branding. Есть MIT, README с примером, теги <code>v1.0.0</code> и <code>v1</code>.
+Поддержаны хост, логин, порт, исходный и целевой каталоги, ключ, <code>known-hosts</code>
+и переключатель <code>delete</code>. По умолчанию удаления нет.</p>
+<p>Action использует rsync по SSH, проверяет ключ сервера и удаляет временный
+приватный ключ после выполнения. Пути с пробелами, <code>..</code>, корневой каталог,
+пустой источник и символические ссылки отклоняются. Это намеренные ограничения
+первой версии, описанные в README. Публикация не атомарная: при обрыве передачи
+каталог может содержать часть новой версии; для учебного сайта это допустимое
+ограничение, для важного сайта нужны каталоги релизов и переключение ссылки.</p>
+<p><a href="https://github.com/ansshour/python-lab/blob/main/.github/workflows/action-check.yml">Workflow-потребитель</a>
+вызывает опубликованный action. Тест использует настоящий SSH и rsync, сравнивает
+загруженный файл и проверяет обе ветки поведения <code>delete</code>. Совместимость
+с фактической ОС, путями и rsync Helios пока не подтверждена.</p>
+<p><strong>Marketplace не равен GitHub Release.</strong> Релиз уже опубликован, но листинг
+Marketplace не завершён: в доступном браузере нет авторизации GitHub.
+Для окончания нужно открыть редактирование релиза <code>v1.0.0</code>, выбрать публикацию
+в Marketplace, проверить название и категории и подтвердить условия, если
+GitHub их предложит. До появления реальной страницы Marketplace нельзя
+указывать, что челлендж выполнен полностью. Порядок оформления и требование
+принять соглашение описаны в <a href="https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace">документации Marketplace</a>.</p>
+<h2 id="9">9. Вывод</h2>
+<p>Для небольших учебных заметок, инструкций и результатов простых исследований
+подходит MkDocs Material с Markdown, фиксированными зависимостями и строгой
+сборкой. Текущий пример использует рецепты, а формула показывает, как добавить
+простое вычисление без внешнего сервиса.</p>
+<p>Для размещения в отечественной среде выбран GitVerse + Helios после выдачи
+доступа: команды сборки сохраняются, меняется доставка файлов. Если нужен
+собственный домен и независимость от учебного аккаунта, удобнее рассмотреть
+Yandex Object Storage или Selectel S3 и заранее согласовать расходы.</p>
+<p>Рекомендация меняется, если нужны сложные научные ссылки, библиография и
+единый вывод в PDF — тогда стоит сравнить Sphinx/MyST; если нужен очень большой
+контентный сайт — отдельно измерить Hugo. Для закрытых данных необходимы
+контроль доступа и отдельная проверка условий размещения. Для формул сложнее
+нашей простой дроби лучше локально поставляемый MathJax/KaTeX либо обработка
+на этапе сборки. Автоматическое обновление на новую основную версию MkDocs
+без проверки темы и расширений не включено.</p>
+<h2 id="_8">Приложение. Тексты пайплайнов</h2>
+<p>Актуальные YAML-файлы с комментариями приведены ниже. GitVerse-файл является
+подготовленной конфигурацией, а не доказательством удалённого запуска.</p>
+<h3 id="githubworkflowspagesyml"><code>.github/workflows/pages.yml</code></h3>
+<pre><code class="language-yaml">name: Site CI
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      break_links:
+        description: 'Учебный провал: добавить несуществующую ссылку'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.14.7'
+          cache: pip
+      - run: python -m pip install --require-hashes -r requirements.txt
+      - run: python scripts/check_spelling.py
+      # Намеренная ошибка меняет только рабочую копию раннера.
+      - if: github.event_name == 'workflow_dispatch' &amp;&amp; inputs.break_links
+        run: printf '\n[Broken link](missing-page.md)\n' &gt;&gt; docs/index.md
+      - run: python scripts/measure.py strict python -m mkdocs build --strict
+      - run: python scripts/check_site.py
+  build:
+    needs: lint
+    runs-on: ubuntu-24.04
+    env:
+      SITE_URL: https://ansshour.github.io/python-lab/
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.14.7'
+          cache: pip
+      - run: python -m pip install --require-hashes -r requirements.txt
+      - run: python scripts/measure.py build python -m mkdocs build --strict
+      - run: python scripts/check_site.py
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' &amp;&amp; github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5.0.1
+        id: deployment
+</code></pre>
+<h3 id="gitverseworkflowssiteyml"><code>.gitverse/workflows/site.yml</code></h3>
+<pre><code class="language-yaml"># Подготовлено по документации GitVerse. Реальный запуск требует аккаунта.
+name: Site on Helios
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.7'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-3.14.7-${{ hashFiles('requirements.txt') }}
+      - run: python -m pip install --require-hashes -r requirements.txt
+      - run: python scripts/check_spelling.py
+      - run: python -m mkdocs build --strict
+      - run: python scripts/check_site.py
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.HELIOS_SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.7'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-3.14.7-${{ hashFiles('requirements.txt') }}
+      - run: python -m pip install --require-hashes -r requirements.txt
+      - run: python scripts/measure.py build python -m mkdocs build --strict
+      - run: python scripts/check_site.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: site
+  deploy:
+    needs: build
+    if: gitverse.ref == 'refs/heads/main' &amp;&amp; gitverse.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: website
+          path: site
+      # GitVerse получает action из GitHub. Доступность нужно проверить на раннере.
+      - uses: https://github.com/ansshour/helios-deploy-action@v1
+        with:
+          host: ${{ vars.HELIOS_HOST }}
+          username: ${{ vars.HELIOS_USER }}
+          port: ${{ vars.HELIOS_PORT }}
+          destination: ${{ vars.HELIOS_PATH }}
+          source: site
+          key: ${{ secrets.HELIOS_SSH_KEY }}
+          known-hosts: ${{ secrets.HELIOS_KNOWN_HOSTS }}
+          delete: 'false'
+      - run: python3 scripts/smoke_url.py &quot;$SITE_URL&quot;
+        env:
+          SITE_URL: ${{ vars.HELIOS_SITE_URL }}
+</code></pre>
+<h3 id="githubworkflowsbenchmarkyml"><code>.github/workflows/benchmark.yml</code></h3>
+<pre><code class="language-yaml">name: Dependency benchmark
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.14.7'
+      # Два чистых окружения; кэш второй установки прогрет первой.
+      - run: |
+          python -m venv /tmp/bench-cold
+          python -m venv /tmp/bench-warm
+          python scripts/measure.py ci-install-cold /tmp/bench-cold/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-cold /tmp/bench-cold/bin/python -m mkdocs build --strict
+          python scripts/measure.py ci-install-warm /tmp/bench-warm/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-warm /tmp/bench-warm/bin/python -m mkdocs build --strict
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: benchmark
+          path: report/evidence/ci-*.log
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: timings
+          path: report/evidence/timings.csv
+</code></pre>
+<h3 id="gitverseworkflowsbenchmarkyml"><code>.gitverse/workflows/benchmark.yml</code></h3>
+<pre><code class="language-yaml"># Не запускался: требуется аккаунт GitVerse.
+name: GitVerse dependency benchmark
+on:
+  workflow_dispatch:
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.7'
+      # Два чистых окружения; кэш второй установки прогрет первой.
+      - run: |
+          python -m venv /tmp/bench-cold
+          python -m venv /tmp/bench-warm
+          python scripts/measure.py ci-install-cold /tmp/bench-cold/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-cold /tmp/bench-cold/bin/python -m mkdocs build --strict
+          python scripts/measure.py ci-install-warm /tmp/bench-warm/bin/pip install --cache-dir /tmp/lab-pip-cache --require-hashes -r requirements.txt
+          python scripts/measure.py ci-build-warm /tmp/bench-warm/bin/python -m mkdocs build --strict
+      - name: Check masking of a harmless test secret
+        env:
+          MASK_PROBE: ${{ secrets.LAB_MASK_PROBE }}
+        run: |
+          test -n &quot;$MASK_PROBE&quot;
+          printf 'Mask probe: %s\n' &quot;$MASK_PROBE&quot;
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark
+          path: report/evidence/ci-*.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: timings
+          path: report/evidence/timings.csv
+</code></pre>
+<h3 id="githubworkflowsaction-checkyml"><code>.github/workflows/action-check.yml</code></h3>
+<pre><code class="language-yaml">name: Action integration
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/action-check.yml']
+permissions:
+  contents: read
+jobs:
+  ssh-transfer:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Start disposable SSH fixture
+        id: fixture
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq openssh-server rsync
+          mkdir -p /tmp/helios-fixture/source /tmp/helios-fixture/target
+          echo fresh &gt; /tmp/helios-fixture/source/index.html
+          echo stale &gt; /tmp/helios-fixture/target/stale.txt
+          ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/client
+          ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/host
+          while IFS= read -r line; do echo &quot;::add-mask::$line&quot;; done &lt; /tmp/helios-fixture/client
+          cp /tmp/helios-fixture/client.pub /tmp/helios-fixture/authorized_keys
+          sudo mkdir -p /run/sshd
+          sudo /usr/sbin/sshd -p 22222 -h /tmp/helios-fixture/host -o AuthorizedKeysFile=/tmp/helios-fixture/authorized_keys -o StrictModes=no -o PasswordAuthentication=no -o PidFile=/tmp/helios-fixture/sshd.pid
+          # Ключ сервера известен напрямую: это наш временный сервер.
+          echo &quot;DEPLOY_TEST_USER=$(whoami)&quot; &gt;&gt; &quot;$GITHUB_ENV&quot;
+          {
+            echo 'TEST_KEY&lt;&lt;KEY_END'
+            cat /tmp/helios-fixture/client
+            echo KEY_END
+            echo &quot;TEST_HOSTS=[127.0.0.1]:22222 $(cat /tmp/helios-fixture/host.pub)&quot;
+          } &gt;&gt; &quot;$GITHUB_ENV&quot;
+      - name: Upload without deleting
+        uses: ansshour/helios-deploy-action@v1
+        with:
+          host: 127.0.0.1
+          username: ${{ env.DEPLOY_TEST_USER }}
+          port: '22222'
+          destination: /tmp/helios-fixture/target
+          source: /tmp/helios-fixture/source
+          key: ${{ env.TEST_KEY }}
+          known-hosts: ${{ env.TEST_HOSTS }}
+      - run: |
+          cmp /tmp/helios-fixture/source/index.html /tmp/helios-fixture/target/index.html
+          test -f /tmp/helios-fixture/target/stale.txt
+      - name: Upload with deleting
+        uses: ansshour/helios-deploy-action@v1
+        with:
+          host: 127.0.0.1
+          username: ${{ env.DEPLOY_TEST_USER }}
+          port: '22222'
+          destination: /tmp/helios-fixture/target
+          source: /tmp/helios-fixture/source
+          key: ${{ env.TEST_KEY }}
+          known-hosts: ${{ env.TEST_HOSTS }}
+          delete: 'true'
+      - run: |
+          cmp /tmp/helios-fixture/source/index.html /tmp/helios-fixture/target/index.html
+          test ! -e /tmp/helios-fixture/target/stale.txt
+      - name: Verify platform masking with a harmless test secret
+        env:
+          MASK_PROBE: ${{ secrets.LAB_MASK_PROBE }}
+        run: |
+          test -n &quot;$MASK_PROBE&quot;
+          printf 'Mask probe: %s\n' &quot;$MASK_PROBE&quot;
+</code></pre></main></html>
