@@ -1,0 +1,67 @@
+name: Action integration
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/action-check.yml']
+permissions:
+  contents: read
+jobs:
+  ssh-transfer:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start disposable SSH fixture
+        id: fixture
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq openssh-server rsync
+          mkdir -p /tmp/helios-fixture/source /tmp/helios-fixture/target
+          echo fresh > /tmp/helios-fixture/source/index.html
+          echo stale > /tmp/helios-fixture/target/stale.txt
+          ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/client
+          ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/host
+          cp /tmp/helios-fixture/client.pub /tmp/helios-fixture/authorized_keys
+          sudo mkdir -p /run/sshd
+          sudo /usr/sbin/sshd -p 22222 -h /tmp/helios-fixture/host -o AuthorizedKeysFile=/tmp/helios-fixture/authorized_keys -o StrictModes=no -o PasswordAuthentication=no -o PidFile=/tmp/helios-fixture/sshd.pid
+          # Ключ сервера известен напрямую: это наш временный сервер.
+          echo "DEPLOY_TEST_USER=$(whoami)" >> "$GITHUB_ENV"
+          {
+            echo 'TEST_KEY<<KEY_END'
+            cat /tmp/helios-fixture/client
+            echo KEY_END
+            echo "TEST_HOSTS=[127.0.0.1]:22222 $(cat /tmp/helios-fixture/host.pub)"
+          } >> "$GITHUB_ENV"
+      - name: Upload without deleting
+        uses: ansshour/helios-deploy-action@v1
+        with:
+          host: 127.0.0.1
+          username: ${{ env.DEPLOY_TEST_USER }}
+          port: '22222'
+          destination: /tmp/helios-fixture/target
+          source: /tmp/helios-fixture/source
+          key: ${{ env.TEST_KEY }}
+          known-hosts: ${{ env.TEST_HOSTS }}
+      - run: |
+          cmp /tmp/helios-fixture/source/index.html /tmp/helios-fixture/target/index.html
+          test -f /tmp/helios-fixture/target/stale.txt
+      - name: Upload with deleting
+        uses: ansshour/helios-deploy-action@v1
+        with:
+          host: 127.0.0.1
+          username: ${{ env.DEPLOY_TEST_USER }}
+          port: '22222'
+          destination: /tmp/helios-fixture/target
+          source: /tmp/helios-fixture/source
+          key: ${{ env.TEST_KEY }}
+          known-hosts: ${{ env.TEST_HOSTS }}
+          delete: 'true'
+      - run: |
+          cmp /tmp/helios-fixture/source/index.html /tmp/helios-fixture/target/index.html
+          test ! -e /tmp/helios-fixture/target/stale.txt
+      - name: Verify platform masking with a harmless test secret
+        env:
+          MASK_PROBE: ${{ secrets.LAB_MASK_PROBE }}
+        run: |
+          test -n "$MASK_PROBE"
+          printf 'Mask probe: %s\n' "$MASK_PROBE"
