@@ -9,7 +9,7 @@ jobs:
   ssh-transfer:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Start disposable SSH fixture
         id: fixture
         shell: bash
@@ -21,6 +21,7 @@ jobs:
           echo stale > /tmp/helios-fixture/target/stale.txt
           ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/client
           ssh-keygen -q -t ed25519 -N '' -f /tmp/helios-fixture/host
+          while IFS= read -r line; do echo "::add-mask::$line"; done < /tmp/helios-fixture/client
           cp /tmp/helios-fixture/client.pub /tmp/helios-fixture/authorized_keys
           sudo mkdir -p /run/sshd
           sudo /usr/sbin/sshd -p 22222 -h /tmp/helios-fixture/host -o AuthorizedKeysFile=/tmp/helios-fixture/authorized_keys -o StrictModes=no -o PasswordAuthentication=no -o PidFile=/tmp/helios-fixture/sshd.pid
